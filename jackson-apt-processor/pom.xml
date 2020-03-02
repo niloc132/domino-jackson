@@ -126,8 +126,40 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>uber</shadedClassifierName>
+                            <!--<shadedArtifactAttached>true</shadedArtifactAttached>-->
+                            <!--<shadedClassifierName>uber</shadedClassifierName>-->
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.dominokit.jackson:jackson-apt</exclude>
+                                    <exclude>org.dominokit.jackson:jackson-super</exclude>
+                                    <exclude>com.google.elemental2:*</exclude>
+                                    <exclude>com.google.jsinterop:*</exclude>
+                                    <exclude>org.gwtproject.i18n:*</exclude>
+                                    <exclude>javax.annotation:javax.annotation-api</exclude>
+
+                                    <exclude>com.google.code.findbugs:jsr305</exclude>
+                                    <exclude>com.google.j2objc:j2objc-annotations</exclude>
+                                    <exclude>com.google.errorprone:error_prone_annotations</exclude>
+
+                                </excludes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.squareup</pattern>
+                                    <shadedPattern>dominojackson.shaded.com.squareup</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.google</pattern>
+                                    <shadedPattern>dominojackson.shaded.com.google</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.checkerframework</pattern>
+                                    <shadedPattern>dominojackson.shaded.org.checkerframework</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
                         </configuration>
                     </execution>
                 </executions>
